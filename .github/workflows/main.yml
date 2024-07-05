@@ -1,0 +1,29 @@
+name: woekflow
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Lint HTML
+      run: super-linter/super-linter@v6.6.0
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+  dev-deploy:
+    name: Deploy Dev
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Download Artifact
+      uses: actions/download-artifact@v4
+    - name: Chech Artifact
+      run: ls -al
+    - name: Deploy Artifact
+      run: echo deploy
+      
+    

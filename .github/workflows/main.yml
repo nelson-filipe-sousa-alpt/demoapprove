@@ -11,7 +11,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Lint HTML
-      uses: super-linter/super-linter@v6.6.0
+      uses: super-linter/super-linter/slim@v6.6.0
+      env:
+        # To report GitHub Actions status checks
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
   dev-deploy:

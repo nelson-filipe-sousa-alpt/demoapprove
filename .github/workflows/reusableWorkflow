@@ -1,0 +1,31 @@
+on:
+  workflow_call: 
+    inputs:
+      name:
+        description: Job Name
+        type: string
+        required: true
+      runner:
+        description: Job Runner
+        type: string
+        required: true
+      destination:
+        description: Deploy Destination
+        type: string
+        required: true
+
+jobs:
+  deploy:
+    name: ${{ inputs.name }}
+    runs-on: ${{ inputs.runner }}
+    steps:
+    - name: Download Artifact
+      uses: actions/download-artifact@v4
+    - name: Check Artifact
+      run: ls
+    - name: Deploy Artifact 
+      run: Copy-Item -Path artifact\* -Destination ${{ inputs.destination }} -Force
+  cleanup:
+    runs-on: ${{ inputs.runner}}
+    steps:
+    - run: echo cleanup
